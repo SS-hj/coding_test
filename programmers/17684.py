@@ -1,14 +1,14 @@
-from collections import deque
 def solution(msg):
-    res = []; num = 27; q = deque(msg); temp = q.popleft()
-    d = dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", range(1,27)))
-    while q:
-        while q and temp in d:
-            temp = temp + q.popleft()
-        if temp not in d:
-            res.append(d[temp[:-1]])
-            d[temp] = num
-            num += 1
-            temp = temp[-1]
-    if temp: res.append(d[temp]) # 남아있는 문자 압축처리
-    return res
+    check = dict(zip('ABCDEFGHIJKLMNOPQRSTUVWXYZ',range(1,27)))
+    n = len(msg)
+    answer = []
+    idx = 27
+    while msg:
+        e = 1
+        while msg[:e+1] in check and e+1<=len(msg):
+            e+=1
+        answer.append(check[msg[:e]])
+        check[msg[:e+1]] = idx
+        idx += 1
+        msg = msg[e:]
+    return answer

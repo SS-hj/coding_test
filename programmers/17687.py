@@ -1,18 +1,14 @@
 def solution(n, t, m, p):
-    def calc(num):
-        result = []
-        while num > 0:
-            if num % n < 10:
-                result.append(num % n)
-            else:
-                result.append(chr(num % n + 55))
-            num //= n
-        return result[::-1]
-    
-    temp = [0]
+    num_to_chr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+    def to_k_number(n, k):      # n을 k진수로 반환
+        res = ""
+        while n > 0:
+            res = num_to_chr[n % k] + res
+            n = n // k
+        return res
+    s = "0"
     num = 1
-    while len(temp) < t*m:
-        temp.extend(calc(num))
-        num += 1
-    
-    return ''.join(map(str, temp))[p-1::m][:t]
+    while len(s)<m*t:
+        s = s+to_k_number(num,n)
+        num+=1
+    return s[p-1::m][:t]
