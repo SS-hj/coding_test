@@ -1,15 +1,15 @@
 def solution(arr):
-    ans = [0,0]
-    def quad(r,c,k):
-        tg = arr[r][c]
-        for i in range(k):
-            for j in range(k):
-                if arr[r+i][c+j] != tg:
-                    quad(r, c, k//2)
-                    quad(r, c+k//2, k//2)
-                    quad(r+k//2, c, k//2)
-                    quad(r+k//2, c+k//2, k//2)
-                    return
-        ans[tg] += 1
-    quad(0,0,len(arr))
-    return ans
+    cnt = [0, 0]
+    def check(sr,sc,l):
+        num = sum(sum(A[sc:sc+l]) for A in arr[sr:sr+l])
+        if  num == l**2:
+            cnt[1] += 1
+        elif num == 0:
+            cnt[0] += 1
+        else:
+            check(sr,sc,l//2)
+            check(sr+l//2,sc,l//2)
+            check(sr,sc+l//2,l//2)
+            check(sr+l//2,sc+l//2,l//2)
+    check(0,0,len(arr))
+    return cnt
